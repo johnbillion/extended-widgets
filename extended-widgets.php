@@ -15,7 +15,7 @@ GNU General Public License for more details.
 
 */
 
-abstract class Amsterdam_Widget extends WP_Widget {
+abstract class Extended_Widget extends WP_Widget {
 
 	public $args = null;
 	public $instance = null;
