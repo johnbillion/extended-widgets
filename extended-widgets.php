@@ -24,40 +24,45 @@ abstract class Extended_Widget extends WP_Widget {
 		call_user_func_array( 'parent::__construct', func_get_args() );
 	}
 
-	abstract public function process();
+	abstract protected function process();
 
-	public function title() {
-		if ( isset( $this->instance['title'] ) )
+	protected function title() {
+		if ( isset( $this->instance['title'] ) ) {
 			return $this->instance['title'];
+		}
 		return false;
 	}
 
-	public function wrapper() {
+	protected function has_wrapper() {
 		return true;
 	}
 
-	public function widget( $args, $instance ) {
+	final public function widget( $args, $instance ) {
 
 		$this->args     = $args;
 		$this->instance = $instance;
 
 		$template_args = array(
 			'dir'  => 'widgets',
-			'vars' => array_merge( $this->args, $this->instance )
+			'vars' => array_merge( $this->args, $this->instance ),
 		);
 
-		if ( isset( $this->args['cache_timeout'] ) )
+		if ( isset( $this->args['cache_timeout'] ) ) {
 			$template_args['cache_timeout'] = $this->args['cache_timeout'];
+		}
 
 		$template = new Amsterdam_Section_Template( $this->get_template_name(), null, $template_args );
 
-		if ( !$template->has_template() )
+		if ( !$template->has_template() ) {
 			return;
+		}
 
-		if ( $this->wrapper() )
+		if ( $this->has_wrapper() ) {
 			echo $this->args['before_widget'];
-		if ( $title = $this->title() )
+		}
+		if ( $title = $this->title() ) {
 			echo $this->args['before_title'] . esc_html( $title ) . $this->args['after_title'];
+		}
 
 		if ( isset( $this->args['cache'] ) and $this->args['cache'] ) {
 
@@ -76,12 +81,13 @@ abstract class Extended_Widget extends WP_Widget {
 
 		}
 
-		if ( !isset( $this->args['wrapper'] ) or $this->args['wrapper'] )
+		if ( $this->has_wrapper() ) {
 			echo $this->args['after_widget'];
+		}
 
 	}
 
-	public function get_template_name() {
+	protected function get_template_name() {
 
 		# This method turns "Namespace_My_Special_Widget" into "my-special". Hence, every
 		# widget that extends this class is expected to be namespaced.
