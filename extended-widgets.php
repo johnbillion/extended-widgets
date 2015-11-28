@@ -44,6 +44,10 @@ abstract class Extended_Widget extends WP_Widget {
 		return false;
 	}
 
+	protected function get_template_name() {
+		return '';
+	}
+
 	protected function has_wrapper() {
 		return true;
 	}
@@ -66,7 +70,7 @@ abstract class Extended_Widget extends WP_Widget {
 			return;
 		}
 
-		$template = new Extended_Template_Part( $this->get_template_name(), null, $template_args );
+		$template = new Extended_Template_Part( $this->get_template_slug(), $this->get_template_name(), $template_args );
 
 		if ( !$template->has_template() ) {
 			return;
@@ -102,7 +106,7 @@ abstract class Extended_Widget extends WP_Widget {
 
 	}
 
-	protected function get_template_name() {
+	final protected function get_template_slug() {
 
 		# This method turns "Namespace_My_Special_Widget" into "my-special". Hence, every
 		# widget that extends this class is expected to be namespaced.
