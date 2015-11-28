@@ -72,7 +72,7 @@ abstract class Extended_Widget extends WP_Widget {
 
 		$template = new Extended_Template_Part( $this->get_template_slug(), $this->get_template_name(), $template_args );
 
-		if ( !$template->has_template() ) {
+		if ( ! $template->has_template() ) {
 			return;
 		}
 
@@ -98,8 +98,9 @@ abstract class Extended_Widget extends WP_Widget {
 
 	final protected function get_template_slug() {
 
-		# This method turns "Namespace_My_Special_Widget" into "my-special". Hence, every
-		# widget that extends this class is expected to be namespaced.
+		# This method turns "Prefix_My_Special_Widget" into "my-special". Hence, every
+		# widget that extends this class is expected to be prefixed.
+		# @TODO Support for namespaces
 
 		$base  = preg_replace( '/_widget$/i', '', $this->id_base ) ;
 		$parts = explode( '_', $base );
@@ -110,7 +111,7 @@ abstract class Extended_Widget extends WP_Widget {
 
 	}
 
-	public static function register() {
+	final public static function register() {
 		register_widget( get_called_class() );
 	}
 
