@@ -55,7 +55,11 @@ abstract class Extended_Widget extends WP_Widget {
 			$template_args['cache_timeout'] = $this->args['cache_timeout'];
 		}
 
-		$template = new Amsterdam_Section_Template( $this->get_template_name(), null, $template_args );
+		if ( ! class_exists( 'Extended_Template_Part' ) ) {
+			return;
+		}
+
+		$template = new Extended_Template_Part( $this->get_template_name(), null, $template_args );
 
 		if ( !$template->has_template() ) {
 			return;
