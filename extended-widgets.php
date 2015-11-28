@@ -37,6 +37,13 @@ abstract class Extended_Widget extends WP_Widget {
 
 	abstract protected function process();
 
+	protected function get_title() {
+		if ( isset( $this->instance['title'] ) ) {
+			return $this->instance['title'];
+		}
+		return false;
+	}
+
 	protected function has_wrapper() {
 		return true;
 	}
@@ -68,8 +75,8 @@ abstract class Extended_Widget extends WP_Widget {
 		if ( $this->has_wrapper() ) {
 			echo $this->args['before_widget'];
 		}
-		if ( ! empty( $this->instance['title'] ) ) {
-			echo $this->args['before_title'] . esc_html( $this->instance['title'] ) . $this->args['after_title'];
+		if ( $title = $this->get_title() ) {
+			echo $this->args['before_title'] . esc_html( $title ) . $this->args['after_title'];
 		}
 
 		if ( isset( $this->args['cache'] ) and $this->args['cache'] ) {
