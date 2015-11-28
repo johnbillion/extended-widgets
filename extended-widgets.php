@@ -35,7 +35,7 @@ abstract class Extended_Widget extends WP_Widget {
 		parent::__construct( $id_base, $name, $widget_options, $control_options );
 	}
 
-	abstract protected function process();
+	abstract protected function get_vars();
 
 	protected function get_title() {
 		if ( isset( $this->instance['title'] ) ) {
@@ -62,8 +62,8 @@ abstract class Extended_Widget extends WP_Widget {
 			'vars' => array_merge( $this->args, $this->instance ),
 		);
 
-		if ( isset( $this->args['cache_timeout'] ) ) {
-			$template_args['cache_timeout'] = $this->args['cache_timeout'];
+		if ( isset( $this->widget_options['cache'] ) ) {
+			$template_args['cache'] = absint( $this->widget_options['cache'] );
 		}
 
 		if ( ! class_exists( 'Extended_Template_Part' ) ) {
@@ -83,22 +83,12 @@ abstract class Extended_Widget extends WP_Widget {
 			echo $this->args['before_title'] . esc_html( $title ) . $this->args['after_title'];
 		}
 
-		if ( isset( $this->args['cache'] ) and $this->args['cache'] ) {
-
-			# @TODO check this caching code
-			if ( !$output = $template->get_cache() ) {
-				$template->set_vars( $this->process() );
-				$output = $template->get_template();
-			}
-
-			echo $output;
-
-		} else {
-
-			$template->set_vars( $this->process() );
-			$template->output_template();
-
+		if ( false === $template->args['cache'] || ! $output = $template->get_cache() ) {
+			$template->set_vars( $this->get_vars() );
+			$output = $template->get_output();
 		}
+
+		echo $output;
 
 		if ( $this->has_wrapper() ) {
 			echo $this->args['after_widget'];
