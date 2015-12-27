@@ -59,7 +59,6 @@ abstract class Extended_Widget extends WP_Widget {
 
 		$template_args = array(
 			'dir'  => 'widgets',
-			'vars' => array_merge( $this->args, $this->instance ),
 		);
 
 		if ( isset( $this->widget_options['cache'] ) ) {
@@ -70,7 +69,8 @@ abstract class Extended_Widget extends WP_Widget {
 			return;
 		}
 
-		$template = new Extended_Template_Part( $this->get_template_slug(), $this->get_template_name(), $template_args );
+		$template_vars = array_merge( $this->args, $this->instance );
+		$template = new Extended_Template_Part( $this->get_template_slug(), $this->get_template_name(), $template_vars, $template_args );
 
 		if ( ! $template->has_template() ) {
 			return;
