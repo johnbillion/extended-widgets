@@ -96,7 +96,7 @@ abstract class Extended_Widget extends WP_Widget {
 
 	}
 
-	final protected function get_template_slug() {
+	protected function get_template_slug() {
 
 		# This method turns "Prefix_My_Special_Widget" into "my-special". Hence, every
 		# widget that extends this class is expected to be prefixed.
