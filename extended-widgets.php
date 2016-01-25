@@ -31,7 +31,7 @@ abstract class Extended_Widget extends WP_Widget {
 	 * @param array  $control_options Optional. Widget control options. See wp_register_widget_control() for
 	 *                                information on accepted arguments. Default empty array.
 	 */
-	public function __construct( $id_base, $name, $widget_options = array(), $control_options = array() ) {
+	public function __construct( $id_base, $name, array $widget_options = [], array $control_options = [] ) {
 		parent::__construct( $id_base, $name, $widget_options, $control_options );
 	}
 
@@ -57,9 +57,9 @@ abstract class Extended_Widget extends WP_Widget {
 		$this->args     = $args;
 		$this->instance = $instance;
 
-		$template_args = array(
+		$template_args = [
 			'dir'  => 'widgets',
-		);
+		];
 
 		if ( isset( $this->widget_options['cache'] ) ) {
 			$template_args['cache'] = absint( $this->widget_options['cache'] );
