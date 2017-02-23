@@ -98,6 +98,13 @@ abstract class Extended_Widget extends WP_Widget {
 	 */
 	final public function widget( $args, $instance ) {
 
+		if ( ! is_array( $args ) ) {
+			$args = [];
+		}
+		if ( ! is_array( $instance ) ) {
+			$instance = [];
+		}
+
 		$this->args     = $args;
 		$this->instance = $instance;
 
